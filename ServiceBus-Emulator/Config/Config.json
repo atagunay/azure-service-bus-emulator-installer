@@ -13,7 +13,7 @@
               "ForwardDeadLetteredMessagesTo": "",
               "ForwardTo": "",
               "LockDuration": "PT1M",
-              "MaxDeliveryCount": 10,
+              "MaxDeliveryCount": 3,
               "RequiresDuplicateDetection": false,
               "RequiresSession": false
             }
@@ -35,7 +35,7 @@
                   "DeadLetteringOnMessageExpiration": false,
                   "DefaultMessageTimeToLive": "PT1H",
                   "LockDuration": "PT1M",
-                  "MaxDeliveryCount": 10,
+                  "MaxDeliveryCount": 3,
                   "ForwardDeadLetteredMessagesTo": "",
                   "ForwardTo": "",
                   "RequiresSession": false
@@ -46,14 +46,15 @@
                     "Properties": {
                       "FilterType": "Correlation",
                       "CorrelationFilter": {
-                        "ContentType": "application/text",
-                        "CorrelationId": "id1",
-                        "Label": "subject1",
-                        "MessageId": "msgid1",
-                        "ReplyTo": "someQueue",
-                        "ReplyToSessionId": "sessionId",
-                        "SessionId": "session1",
-                        "To": "xyz"
+                        "ContentType": "application/json"
+                        // Other supported properties
+                        // "CorrelationId": "id1",
+                        // "Label": "subject1",
+                        // "MessageId": "msgid1",
+                        // "ReplyTo": "someQueue",
+                        // "ReplyToSessionId": "sessionId",
+                        // "SessionId": "session1",
+                        // "To": "xyz"
                       }
                     }
                   }
@@ -65,7 +66,7 @@
                   "DeadLetteringOnMessageExpiration": false,
                   "DefaultMessageTimeToLive": "PT1H",
                   "LockDuration": "PT1M",
-                  "MaxDeliveryCount": 10,
+                  "MaxDeliveryCount": 3,
                   "ForwardDeadLetteredMessagesTo": "",
                   "ForwardTo": "",
                   "RequiresSession": false
@@ -77,7 +78,7 @@
                       "FilterType": "Correlation",
                       "CorrelationFilter": {
                         "Properties": {
-                          "prop3": "value3"
+                          "prop1": "value1"
                         }
                       }
                     }
@@ -90,7 +91,7 @@
                   "DeadLetteringOnMessageExpiration": false,
                   "DefaultMessageTimeToLive": "PT1H",
                   "LockDuration": "PT1M",
-                  "MaxDeliveryCount": 10,
+                  "MaxDeliveryCount": 3,
                   "ForwardDeadLetteredMessagesTo": "",
                   "ForwardTo": "",
                   "RequiresSession": false
