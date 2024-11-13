@@ -13,7 +13,7 @@
               "ForwardDeadLetteredMessagesTo": "",
               "ForwardTo": "",
               "LockDuration": "PT1M",
-              "MaxDeliveryCount": 10,
+              "MaxDeliveryCount": 3,
               "RequiresDuplicateDetection": false,
               "RequiresSession": false
             }
@@ -35,7 +35,7 @@
                   "DeadLetteringOnMessageExpiration": false,
                   "DefaultMessageTimeToLive": "PT1H",
                   "LockDuration": "PT1M",
-                  "MaxDeliveryCount": 10,
+                  "MaxDeliveryCount": 3,
                   "ForwardDeadLetteredMessagesTo": "",
                   "ForwardTo": "",
                   "RequiresSession": false
@@ -65,7 +65,7 @@
                   "DeadLetteringOnMessageExpiration": false,
                   "DefaultMessageTimeToLive": "PT1H",
                   "LockDuration": "PT1M",
-                  "MaxDeliveryCount": 10,
+                  "MaxDeliveryCount": 3,
                   "ForwardDeadLetteredMessagesTo": "",
                   "ForwardTo": "",
                   "RequiresSession": false
@@ -90,7 +90,7 @@
                   "DeadLetteringOnMessageExpiration": false,
                   "DefaultMessageTimeToLive": "PT1H",
                   "LockDuration": "PT1M",
-                  "MaxDeliveryCount": 10,
+                  "MaxDeliveryCount": 3,
                   "ForwardDeadLetteredMessagesTo": "",
                   "ForwardTo": "",
                   "RequiresSession": false
