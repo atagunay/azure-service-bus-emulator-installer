@@ -1,33 +1,107 @@
-# Project
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+ # <img src="https://github.com/Azure/azure-service-bus-emulator-installer/blob/main/azure-servicebus-emulator.svg" alt="Event-Hubs Logo" width="50">    Azure Service Bus Emulator Installer
 
-As the maintainer of this project, please make a few updates:
+This repository contains the scripts required to install and run the  [Azure Service Bus Emulator](https://learn.microsoft.com/en-us/azure/event-hubs/overview-emulator).
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+- [Azure Service Bus](#About-Azure-Event-Hubs)
+  - [Emulator Overview](#About-Azure-Event-Hubs-Emulator)
+  - [Prerequisites](#Prerequisites)
+  - [Running Emulator](#Running-the-emulator)
+    - [Using Automated Script](#Using-Automated-Script)
+    - [Using Docker Compose](#Using-Docker-Compose-Linux-Container)
+  - [Interacting with Emulator](#Interacting-with-emulator)
+  - [Support](#Support)
+  - [License](#License)
 
-## Contributing
+## About Azure Service Bus
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+Azure Service Bus is a fully managed enterprise message broker offering queues and publish-subscribe topics. It decouples applications and services, providing benefits like load-balancing across workers, safe data and control routing, and reliable transactional coordination. Read more [here](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview).
 
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+## About Azure Service Bus Emulator 
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+The Azure Service Bus emulator offers a local development experience for the Service bus service. You can use the emulator to develop and test code against the service in isolation, free from cloud interference.
 
-## Trademarks
+>[!CAUTION]
+>Emulator is intended solely for development and testing scenarios.Any kind of Production use is strictly discouraged. There is no official support provided for Emulator.
+> Any issues/suggestions should be reported via GitHub issues on [GitHub project](https://github.com/Azure/azure-service-bus-emulator-installer/issues).
+## Run Azure Service Bus Emulator 
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-Any use of third-party trademarks or logos are subject to those third-party's policies.
+This section summarizes the steps to develop and test locally with Service Bus Emulator. To read more about Service Bus, read [here](event-hubs-about.md).
+
+## Prerequisites
+
+- Docker 
+  - [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/#:~:text=Install%20Docker%20Desktop%20on%20Windows%201%20Download%20the,on%20your%20choice%20of%20backend.%20...%20More%20items) 
+- Minimum hardware Requirements:
+  - 2 GB RAM
+  - 5 GB of Disk space
+- WSL Enablement (Only for Windows):
+  - [Install Windows Subsystem for Linux (WSL) | Microsoft Learn](https://learn.microsoft.com/en-us/windows/wsl/install)
+  -  [Configure Docker to use WSL](https://docs.docker.com/desktop/wsl/#:~:text=Turn%20on%20Docker%20Desktop%20WSL%202%201%20Download,engine%20..%20...%206%20Select%20Apply%20%26%20Restart.)
+
+>[!NOTE]
+>Before you continue with the subsequent steps, make sure Docker Engine is operational in the background.
+
+## Running the Emulator 
+
+This section highlights different steps to run Service Bus Emulator. Details are as follows:
+
+#### [Using Automated Script](#tab/automated-script)
+
+Before running automated script, clone the installation [repository](https://github.com/Azure/azure-service-bus-emulator-installer) locally.
+ 
+### Windows
+After completing the prerequisites, you can proceed with the following steps to run the Service Bus Emulator locally. 
+1. Before executing the setup script, we need to allow execution of unsigned scripts. Run the below command in the PowerShell window:
+
+`$>Start-Process powershell -Verb RunAs -ArgumentList 'Set-ExecutionPolicy Bypass –Scope CurrentUser’`
+
+2. Execute setup script `LaunchEmulator.ps1`. Running the script would bring up two containers – Service Bus Emulator & Azurite (dependency for Emulator)
+
+### Linux & macOS
+After completing the prerequisites, you can proceed with the following steps to run the Service Bus Emulator locally. 
+
+1. Execute the setup script `LaunchEmulator.sh` . Running the script would  bring up two containers – Service Bus Emulator & Azurite (dependency for Emulator)
+
+1. Execute the same script `LaunchEmulator.sh` with the option `--compose-down=Y` to issue a `docker compose down` to terminate the containers.
+
+```shell
+LaunchEmulator.sh --compose-down=Y
+```
+
+#### [Using Docker Compose (Linux Container)](#tab/docker-linux-container)
+
+You can also spin up Emulator using Docker Compose file from Microsoft Container Registry. Refer [here](https://mcr.microsoft.com/en-us/product/azure-messaging/eventhubs-emulator/about#usage) for details. 
+
+Once the steps are successful, Emulator compose set can be found in running in Docker.
+
+![image](https://github.com/Azure/azure-event-hubs-emulator-installer/assets/62641016/f7c8d2ad-dea1-4fd5-84b6-8f105ce2b602)
+
+## Interacting with Emulator
+
+1. You can use the following connection string to connect to Azure Service Bus Emulator.
+```
+"Endpoint=sb://localhost;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;"
+```
+2. With the latest client SDK releases, you can interact with the Emulator in various programming language. For details, refer [here](https://learn.microsoft.com/en-us/azure/event-hubs/sdks#client-sdks)
+
+To get started, refer to our GitHub Samples [here](https://github.com/Azure/azure-event-hubs-emulator-installer/tree/main/Sample-Code-Snippets).
+
+## Support
+
+There is no official support provided for Emulator.Any issues/suggestions should be reported via GitHub issues on [installation repo](https://github.com/Azure/azure-event-hubs-emulator-installer/issues).
+
+## License
+
+The scripts and documentation in this project are released under the MIT License.
+
+The software (Azure Service Bus Emulator) that the scripts in this repository install is licensed under separate terms. See the [End User License Agreement](https://github.com/Azure/azure-service-bus-emulator-installer/blob/main/EMULATOR_EULA.txt) for the terms governing the software.
+
+
+
+
+
+
+   
+
+
