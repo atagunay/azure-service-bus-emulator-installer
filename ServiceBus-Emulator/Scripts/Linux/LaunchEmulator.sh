@@ -8,9 +8,9 @@ composeFile=$(realpath "$(dirname "$BASH_SOURCE")/../../../Docker-Compose-Templa
 SQL_PASSWORD=''
 
 # Password regex pattern
-char_allowed='^[A-Za-z0-9@\$!%*?&]{8,128}$'
+char_allowed='^.{8,128}$'
 digit_pattern='[0-9]'
-special_char_pattern='[@\$!%*?&]'
+special_char_pattern='[^a-zA-Z0-9]'
 uppercase_pattern='[A-Z]'
 lowercase_pattern='[a-z]'
 

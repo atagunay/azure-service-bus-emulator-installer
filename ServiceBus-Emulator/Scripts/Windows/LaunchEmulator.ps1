@@ -31,8 +31,8 @@ function Validate-Password {
     $uppercasePattern = '(?-i)[A-Z]'
     $lowercasePattern = '(?-i)[a-z]'
     $digitPattern = '\d'
-    $specialCharPattern = '[@$!%*?&]'
-    $charAllowed = '[A-Za-z\d@$!%*?&]{8,128}'
+    $specialCharPattern = '[\W_]'
+    $charAllowed = '[A-Za-z\d\W_]{8,128}'
 
 
     $matchCount = 0
