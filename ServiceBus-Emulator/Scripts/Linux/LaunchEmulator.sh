@@ -5,6 +5,40 @@ ACCEPT_EULA='n'
 CONFIG_PATH='../ServiceBus-Emulator/Config/Config.json'
 COMPOSE_DOWN='n'
 composeFile=$(realpath "$(dirname "$BASH_SOURCE")/../../../Docker-Compose-Template/docker-compose-default.yml")
+SQL_PASSWORD=''
+
+# Password regex pattern
+char_allowed='^[A-Za-z0-9@\$!%*?&]{8,128}$'
+digit_pattern='[0-9]'
+special_char_pattern='[@\$!%*?&]'
+uppercase_pattern='[A-Z]'
+lowercase_pattern='[a-z]'
+
+validate_password() {
+    local count=0
+    if [[ "$SQL_PASSWORD" =~ $digit_pattern ]]; then
+        count=$((count+1))
+    fi
+
+    if [[ "$SQL_PASSWORD" =~ $special_char_pattern ]]; then
+        count=$((count+1))
+    fi
+
+    if [[ "$SQL_PASSWORD" =~ $uppercase_pattern ]]; then
+        count=$((count+1))
+    fi
+
+    if [[ "$SQL_PASSWORD" =~ $lowercase_pattern ]]; then
+        count=$((count+1))
+    fi
+
+    if [[ "$SQL_PASSWORD" =~ $char_allowed ]] && [[ $count -ge 3 ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
 
 # Loop through all arguments
 for arg in "$@"
@@ -29,6 +63,19 @@ do
             exit 1
         fi
     fi
+
+    if [[ $arg == --SQL_PASSWORD=* ]]; then
+        SQL_PASSWORD="${arg#*=}"
+
+        validate_password
+        result=$?
+
+        if [[ $result -eq 0 ]]; then
+            echo 'Invalid password. Password must meet the security requirements : https://learn.microsoft.com/en-us/sql/relational-databases/security/strong-passwords?view=sql-server-linux-ver16'
+            exit 1
+        fi
+    fi
+
 done
 
 # Skip EULA check if only running docker compose down
@@ -44,9 +91,26 @@ if [[ "$COMPOSE_DOWN" != 'y' && "$COMPOSE_DOWN" != 'Y' ]]; then
         fi
     fi
 
+    validate_password
+    result=$?
+
+    if [[ $result -eq 0 ]]; then
+        echo 'Enter the password for the SQL Server (To be filled as per policy : https://learn.microsoft.com/en-us/sql/relational-databases/security/strong-passwords?view=sql-server-linux-ver16)'
+        read SQL_PASSWORD
+
+        validate_password
+        result=$?
+
+        if [[ $result  -eq 0 ]]; then
+            echo 'Invalid password. Password must meet the security requirements : https://learn.microsoft.com/en-us/sql/relational-databases/security/strong-passwords?view=sql-server-linux-ver16'
+            exit 1
+        fi
+    fi
+
     # Set EULA as env variable
     echo "EULA has been accepted. Proceeding with launching containers.."
     export ACCEPT_EULA=$ACCEPT_EULA
+    export SQL_PASSWORD=$SQL_PASSWORD
 fi
 
 # Set Config Path as env variable
