@@ -1,7 +1,7 @@
 
  # <img src="https://github.com/Azure/azure-service-bus-emulator-installer/blob/main/azure-servicebus-emulator.svg" alt="Event-Hubs Logo" width="50">    Azure Service Bus Emulator Installer
 
-This repository contains the scripts required to install and run the  [Azure Service Bus Emulator](https://learn.microsoft.com/en-us/azure/event-hubs/overview-emulator).
+This repository contains the scripts required to install and run the  [Azure Service Bus Emulator](https://learn.microsoft.com/en-us/azure/service-bus-messaging/overview-emulator).
 
 - [Azure Service Bus](#About-Azure-Service-Bus)
   - [Emulator Overview](#About-Azure-Service-Bus-Emulator)
