@@ -3,8 +3,8 @@
 
 This repository contains the scripts required to install and run the  [Azure Service Bus Emulator](https://learn.microsoft.com/en-us/azure/event-hubs/overview-emulator).
 
-- [Azure Service Bus](#About-Azure-Event-Hubs)
-  - [Emulator Overview](#About-Azure-Event-Hubs-Emulator)
+- [Azure Service Bus](#About-Azure-Service-Bus)
+  - [Emulator Overview](#About-Azure-Service-Bus-Emulator)
   - [Prerequisites](#Prerequisites)
   - [Running Emulator](#Running-the-emulator)
     - [Using Automated Script](#Using-Automated-Script)
@@ -56,12 +56,12 @@ After completing the prerequisites, you can proceed with the following steps to 
 
 `$>Start-Process powershell -Verb RunAs -ArgumentList 'Set-ExecutionPolicy Bypass –Scope CurrentUser’`
 
-2. Execute setup script `LaunchEmulator.ps1`. Running the script would bring up two containers – Service Bus Emulator & Azurite (dependency for Emulator)
+2. Execute setup script `LaunchEmulator.ps1`. Running the script would bring up two containers – Service Bus Emulator & Azure SQL Edge (dependency for Emulator)
 
 ### Linux & macOS
 After completing the prerequisites, you can proceed with the following steps to run the Service Bus Emulator locally. 
 
-1. Execute the setup script `LaunchEmulator.sh` . Running the script would  bring up two containers – Service Bus Emulator & Azurite (dependency for Emulator)
+1. Execute the setup script `LaunchEmulator.sh` . Running the script would  bring up two containers – Service Bus Emulator & Azure SQL Edge (dependency for Emulator)
 
 1. Execute the same script `LaunchEmulator.sh` with the option `--compose-down=Y` to issue a `docker compose down` to terminate the containers.
 
@@ -71,7 +71,7 @@ LaunchEmulator.sh --compose-down=Y
 
 #### [Using Docker Compose (Linux Container)](#tab/docker-linux-container)
 
-You can also spin up Emulator using Docker Compose file from Microsoft Container Registry. Refer [here](https://mcr.microsoft.com/en-us/product/azure-messaging/eventhubs-emulator/about#usage) for details. 
+You can also spin up Emulator using Docker Compose file from Microsoft Container Registry. Refer [here](https://mcr.microsoft.com/en-us/product/azure-messaging/servicebus-emulator/about#usage) for details. 
 
 Once the steps are successful, Emulator compose set can be found in running in Docker.
 
@@ -85,11 +85,11 @@ Once the steps are successful, Emulator compose set can be found in running in D
 ```
 2. With the latest client SDK releases, you can interact with the Emulator in various programming language. For details, refer [here](https://learn.microsoft.com/en-us/azure/event-hubs/sdks#client-sdks)
 
-To get started, refer to our GitHub Samples [here](https://github.com/Azure/azure-event-hubs-emulator-installer/tree/main/Sample-Code-Snippets).
+To get started, refer to our GitHub Samples [here](https://github.com/Azure/azure-service-bus-emulator-installer/tree/main/Sample-Code-Snippets).
 
 ## Support
 
-There is no official support provided for Emulator.Any issues/suggestions should be reported via GitHub issues on [installation repo](https://github.com/Azure/azure-event-hubs-emulator-installer/issues).
+There is no official support provided for Emulator.Any issues/suggestions should be reported via GitHub issues on [installation repo](https://github.com/Azure/azure-service-bus-emulator-installer/issues).
 
 ## License
 

@@ -1,6 +1,7 @@
 param(
   [string]$ACCEPT_EULA='n',
-  [string]$CONFIG_PATH='../ServiceBus-Emulator/Config/Config.json'
+  [string]$CONFIG_PATH='../ServiceBus-Emulator/Config/Config.json',
+  [string]$SQL_PASSWORD=''
 )
 
 # For dynamic ports and support communication to host network use the commentted docker compose file path instead.
@@ -22,9 +23,64 @@ else{
     }
 }
 
+function Validate-Password {
+    param(
+        [string]$password
+    )
+
+    $uppercasePattern = '(?-i)[A-Z]'
+    $lowercasePattern = '(?-i)[a-z]'
+    $digitPattern = '\d'
+    $specialCharPattern = '[\W_]'
+    $charAllowed = '[A-Za-z\d\W_]{8,128}'
+
+
+    $matchCount = 0
+    if($password -match $uppercasePattern){
+        $matchCount++
+    }
+    if($password -match $lowercasePattern){
+        $matchCount++
+    }
+    if($password -match $digitPattern){
+        $matchCount++
+    }
+    if($password -match $specialCharPattern){
+        $matchCount++
+    }
+
+    if($matchCount -lt 3 -or $password -notmatch $charAllowed){
+        return $false
+    }
+    return $true
+}
+
+if($PSBoundParameters.ContainsKey('SQL_PASSWORD')){
+
+    $isValid = Validate-Password -password $SQL_PASSWORD
+
+    if(-not $isValid){
+        Write-Host "Invalid password. Password must meet the security requirements : https://learn.microsoft.com/en-us/sql/relational-databases/security/strong-passwords?view=sql-server-linux-ver16"
+        exit
+    }
+}
+else{
+    $SQL_PASSWORD = Read-Host "Enter the password for the SQL Server (To be filled as per policy : https://learn.microsoft.com/en-us/sql/relational-databases/security/strong-passwords?view=sql-server-linux-ver16)"
+
+    $isValid = Validate-Password -password $SQL_PASSWORD
+
+    if(-not $isValid){
+        Write-Host "Invalid password. Password must meet the security requirements : https://learn.microsoft.com/en-us/sql/relational-databases/security/strong-passwords?view=sql-server-linux-ver16"
+        exit
+    }
+}
+
 # Set EULA as env variable
 Write-Host "EULA has been accepted. Proceeding with launching containers.."
 $env:ACCEPT_EULA = $ACCEPT_EULA
+
+# Set SQL Password as env variable
+$env:SQL_PASSWORD = $SQL_PASSWORD
 
 # Set Config Path as env variable
 $env:CONFIG_PATH = $CONFIG_PATH
