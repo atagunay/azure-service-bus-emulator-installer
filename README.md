@@ -3,8 +3,8 @@
 
 This repository contains the scripts required to install and run the  [Azure Service Bus Emulator](https://learn.microsoft.com/en-us/azure/event-hubs/overview-emulator).
 
-- [Azure Service Bus](#About-Azure-Event-Hubs)
-  - [Emulator Overview](#About-Azure-Event-Hubs-Emulator)
+- [Azure Service Bus](#About-Azure-Service-Bus)
+  - [Emulator Overview](#About-Azure-Service-bus-emulator)
   - [Prerequisites](#Prerequisites)
   - [Running Emulator](#Running-the-emulator)
     - [Using Automated Script](#Using-Automated-Script)
@@ -17,7 +17,7 @@ This repository contains the scripts required to install and run the  [Azure Ser
 
 Azure Service Bus is a fully managed enterprise message broker offering queues and publish-subscribe topics. It decouples applications and services, providing benefits like load-balancing across workers, safe data and control routing, and reliable transactional coordination. Read more [here](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview).
 
-## About Azure Service Bus Emulator 
+## About Azure Service Bus emulator 
 
 The Azure Service Bus emulator offers a local development experience for the Service bus service. You can use the emulator to develop and test code against the service in isolation, free from cloud interference.
 
@@ -26,7 +26,7 @@ The Azure Service Bus emulator offers a local development experience for the Ser
 > Any issues/suggestions should be reported via GitHub issues on [GitHub project](https://github.com/Azure/azure-service-bus-emulator-installer/issues).
 ## Run Azure Service Bus Emulator 
 
-This section summarizes the steps to develop and test locally with Service Bus Emulator. To read more about Service Bus, read [here](event-hubs-about.md).
+This section summarizes the steps to develop and test locally with Service Bus Emulator. To read more about Service Bus, read [here](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview).
 
 ## Prerequisites
 
@@ -56,14 +56,14 @@ After completing the prerequisites, you can proceed with the following steps to 
 
 `$>Start-Process powershell -Verb RunAs -ArgumentList 'Set-ExecutionPolicy Bypass –Scope CurrentUser’`
 
-2. Execute setup script `LaunchEmulator.ps1`. Running the script would bring up two containers – Service Bus Emulator & Azurite (dependency for Emulator)
+2. Execute setup script `LaunchEmulator.ps1`. Running the script would bring up two containers – Service Bus Emulator & Sql edge (dependency for Emulator)
 
 ### Linux & macOS
 After completing the prerequisites, you can proceed with the following steps to run the Service Bus Emulator locally. 
 
-1. Execute the setup script `LaunchEmulator.sh` . Running the script would  bring up two containers – Service Bus Emulator & Azurite (dependency for Emulator)
+1. Execute the setup script `LaunchEmulator.sh` . Running the script would  bring up two containers – Service Bus Emulator & Sql edge (dependency for Emulator)
 
-1. Execute the same script `LaunchEmulator.sh` with the option `--compose-down=Y` to issue a `docker compose down` to terminate the containers.
+2. Execute the same script `LaunchEmulator.sh` with the option `--compose-down=Y` to issue a `docker compose down` to terminate the containers.
 
 ```shell
 LaunchEmulator.sh --compose-down=Y
@@ -71,31 +71,61 @@ LaunchEmulator.sh --compose-down=Y
 
 #### [Using Docker Compose (Linux Container)](#tab/docker-linux-container)
 
-You can also spin up Emulator using Docker Compose file from Microsoft Container Registry. Refer [here](https://mcr.microsoft.com/en-us/product/azure-messaging/eventhubs-emulator/about#usage) for details. 
+You can also spin up Emulator using Docker Compose file directly. Refer [here]() for details:
 
-Once the steps are successful, Emulator compose set can be found in running in Docker.
+[Test locally with Service Bus emulator]()
 
-![image](https://github.com/Azure/azure-event-hubs-emulator-installer/assets/62641016/f7c8d2ad-dea1-4fd5-84b6-8f105ce2b602)
+[Microsoft Container Registry](https://mcr.microsoft.com/en-us/artifact/mar/azure-messaging/servicebus-emulator/about)
 
-## Interacting with Emulator
+[Docker Hub]()
 
-1. You can use the following connection string to connect to Azure Service Bus Emulator.
+
+Once the steps are successful, Emulator compose set can be found running in Docker.
+
+![test-locally-with-service-bus-emulator](https://github.com/user-attachments/assets/0792b294-a3dc-4980-aca2-ec4db04125a6)
+
+## Interact with the emulator
+
+By default, emulator uses [config.json](https://github.com/Azure/azure-service-bus-emulator-installer/blob/main/ServiceBus-Emulator/Config/Config.json) configuration file. You can configure entities by making changes to configuration file. To know more, visit [make configuration changes](overview-emulator.md#quota-configuration-changes). 
+
+>[!NOTE]
+> Service Bus emulator isn't compatible with the community owned [open source Service Bus Explorer](https://github.com/paolosalvatori/ServiceBusExplorer)
+
+You can use the following connection string to connect to the Service Bus emulator:
+
+ - When the emulator container and interacting application are running natively on local machine, use following connection string:
 ```
 "Endpoint=sb://localhost;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;"
 ```
-2. With the latest client SDK releases, you can interact with the Emulator in various programming language. For details, refer [here](https://learn.microsoft.com/en-us/azure/event-hubs/sdks#client-sdks)
+  - Applications (Containerized/Non-containerized) on the different machine and same local network can interact with Emulator using the IPv4 address of the machine. Use following connection string:
+```
+"Endpoint=sb://192.168.y.z;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;"
+```
+  - Application containers on the same bridge network can interact with Emulator using its alias or IP. Following connection string assumes the name of Emulator container is "servicebus-emulator":
+```
+"Endpoint=sb://servicebus-emulator;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;"
+```
+  - Application containers on the different bridge network can interact with Emulator using the "host.docker.internal" as host. Use following connection string:
+```
+"Endpoint=sb://host.docker.internal;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;"
+```
 
-To get started, refer to our GitHub Samples [here](https://github.com/Azure/azure-event-hubs-emulator-installer/tree/main/Sample-Code-Snippets).
+You can use the latest client SDKs to interact with the Service Bus emulator across various programming languages. To get started, refer to the [Service Bus emulator samples on GitHub](https://github.com/Azure/azure-service-bus-emulator-installer/tree/main/Sample-Code-Snippets/NET/ServiceBus.Emulator.Console.Sample).
+
 
 ## Support
 
-There is no official support provided for Emulator.Any issues/suggestions should be reported via GitHub issues on [installation repo](https://github.com/Azure/azure-event-hubs-emulator-installer/issues).
+There is no official support provided for Emulator.Any issues/suggestions should be reported via GitHub issues on [installation repo](https://github.com/Azure/azure-service-bus-emulator-installer/issues).
 
 ## License
 
 The scripts and documentation in this project are released under the MIT License.
 
-The software (Azure Service Bus Emulator) that the scripts in this repository install is licensed under separate terms. See the [End User License Agreement](https://github.com/Azure/azure-service-bus-emulator-installer/blob/main/EMULATOR_EULA.txt) for the terms governing the software.
+The software (Azure Service Bus Emulator and Sql Edge) that the scripts in this repository install are licensed under separate terms. Refer to the terms governing each software below:
+- Azure Service Bus emulator : [EULA](https://github.com/Azure/azure-service-bus-emulator-installer/blob/main/EMULATOR_EULA.txt)
+- Azure SQL Edge Developer Edition: [EULA](https://go.microsoft.com/fwlink/?linkid=2139274) 
+  - SQL Edge provides Developer and Premium editions, Service Bus Emulator relies on the Developer edition which is licensed for use as a development and test system and cannot be used in a production environment.
+
 
 
 
