@@ -1,0 +1,16 @@
+# Sample Docker Compose if user wants to reuse their own *Non-Production* SQL container instance. 
+# This sample assumes that user mounts their SQL container to host machine 
+
+name: microsoft-azure-servicebus-emulator
+services:
+  emulator:
+    container_name: "servicebus-emulator"
+    image: mcr.microsoft.com/azure-messaging/servicebus-emulator:latest
+    volumes:
+      - "${CONFIG_PATH}:/ServiceBus_Emulator/ConfigFiles/Config.json"
+    ports:
+      - "5672:5672"
+    environment:
+      SQL_SERVER: host.docker.internal:1433 # Host:Port for user speficied SQL DB container (Port is optional if default 1433 is used)
+      MSSQL_SA_PASSWORD: "${SQL_PASSWORD}"  # Password for user specified SQL instance  
+      ACCEPT_EULA: ${ACCEPT_EULA}
