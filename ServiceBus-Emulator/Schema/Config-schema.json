@@ -238,7 +238,11 @@
                                         "properties": {
                                           "FilterType": {
                                             "type": "string",
-                                            "description": "Type of filter"
+                                            "description": "Type of filter",
+                                            "enum": [
+                                              "Correlation",
+                                              "Sql"
+                                            ]
                                           },
                                           "CorrelationFilter": {
                                             "type": "object",
