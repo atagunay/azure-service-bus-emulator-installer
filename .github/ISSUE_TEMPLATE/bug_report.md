@@ -22,7 +22,7 @@ If applicable, add screenshots to help explain your problem.
 **Logs**
 If applicable, add the logs generated from the container.
 To know more about logs please refer here: [ServiceBus-Emulator Logs](https://learn.microsoft.com/en-us/azure/service-bus-messaging/overview-emulator#logs-for-debugging)
-<img src="https://raw.githubusercontent.com/Azure/service-bus-emulator-installer/main/.github/ISSUE_TEMPLATE/EmulatorContainerLogs.png" alt="EmulatorContainerLogSample">
+<img src="https://raw.githubusercontent.com/Azure/azure-service-bus-emulator-installer/refs/heads/main/.github/ISSUE_TEMPLATE/EmulatorContainerLogs.png" alt="EmulatorContainerLogSample">
 
 **Desktop:**
  - OS: [e.g. Windows]
