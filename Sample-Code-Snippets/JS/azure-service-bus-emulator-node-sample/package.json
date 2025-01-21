@@ -1,5 +1,5 @@
 {
-  "name": "azure-service-bus-emulator-console-sample",
+  "name": "azure-service-bus-emulator-node-sample",
   "version": "1.0.0",
   "main": "sample-send-receive.js",
   "keywords": [],
@@ -10,6 +10,6 @@
   "description": "",
   "dependencies": {
     "@azure/service-bus": "^7.9.5",
-    "azure-service-bus-emulator-console-sample": "file:"
+    "azure-service-bus-emulator-node-sample": "file:"
   }
 }
