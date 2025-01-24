@@ -83,7 +83,7 @@ internal class Program
             }
         }
 
-        Console.WriteLine("Done recieving");
+        Console.WriteLine("Done receiving.");
 
         await receiver.DisposeAsync();
         await client.DisposeAsync();
