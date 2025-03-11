@@ -55,7 +55,7 @@ This section highlights different steps to run Service Bus Emulator. Details are
 Before running automated script, clone the installation [repository](https://github.com/Azure/azure-service-bus-emulator-installer) locally.
  
 ### Windows
-After completing the prerequisites, you can proceed with the following steps to run the Event Hubs Emulator locally on Windows: 
+After completing the prerequisites, you can proceed with the following steps to run the Service Bus Emulator locally on Windows: 
 
 1. **Open PowerShell** and navigate to the directory where the common scripts [folder](ServiceBus-Emulator/Scripts/Common) is cloned using `cd`:
    ```powershell
