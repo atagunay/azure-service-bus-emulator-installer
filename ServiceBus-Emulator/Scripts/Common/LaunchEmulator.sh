@@ -6,6 +6,7 @@ CONFIG_PATH='../ServiceBus-Emulator/Config/Config.json'
 COMPOSE_DOWN='n'
 composeFile=$(realpath "$(dirname "$BASH_SOURCE")/../../../Docker-Compose-Template/docker-compose-default.yml")
 SQL_PASSWORD=''
+SQL_WAIT_INTERVAL=''
 
 # Password regex pattern
 char_allowed='^.{8,128}$'
@@ -107,10 +108,17 @@ if [[ "$COMPOSE_DOWN" != 'y' && "$COMPOSE_DOWN" != 'Y' ]]; then
         fi
     fi
 
+    if [ -z "$SQL_WAIT_INTERVAL" ]; then
+        read -p "Enter the wait interval for SQL Server to be ready (in seconds) [default: 15]: " SQL_WAIT_INTERVAL
+        # Set default value if no input is provided
+        SQL_WAIT_INTERVAL=${SQL_WAIT_INTERVAL:-15}
+    fi
+
     # Set EULA as env variable
     echo "EULA has been accepted. Proceeding with launching containers.."
     export ACCEPT_EULA=$ACCEPT_EULA
     export SQL_PASSWORD=$SQL_PASSWORD
+    export SQL_WAIT_INTERVAL=$SQL_WAIT_INTERVAL
 fi
 
 # Set Config Path as env variable
