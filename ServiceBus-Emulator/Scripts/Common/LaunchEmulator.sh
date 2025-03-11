@@ -6,7 +6,7 @@ CONFIG_PATH='../ServiceBus-Emulator/Config/Config.json'
 COMPOSE_DOWN='n'
 composeFile=$(realpath "$(dirname "$BASH_SOURCE")/../../../Docker-Compose-Template/docker-compose-default.yml")
 SQL_PASSWORD=''
-SQL_WAIT_INTERVAL='15'
+SQL_WAIT_INTERVAL=''
 
 # Password regex pattern
 char_allowed='^.{8,128}$'
